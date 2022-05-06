@@ -59,6 +59,8 @@ async function run() {
             const result = await userEmailCollection.insertOne(userEmail)
             res.send(result)
          });
+        
+        //get
          app.get('/user', async (req, res) => {
             const query = {};
             const cursor = userEmailCollection.find(query)
@@ -66,6 +68,34 @@ async function run() {
             res.send(products)
         
         });
+
+     //delete
+        app.delete('/user/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await userEmailCollection.deleteOne(query)
+            res.send(result)
+        })
+
+
+       //quantity update api
+     app.put('/quantity/:id' , async(req,res)=>{
+      const id = req.params.id;
+      const data = req.body;
+      const filter = {_id: ObjectId(id)}
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          quantity : data.quantity 
+        }
+      };
+      const result = await productCollection.updateOne(filter ,updatedDoc , options)
+      res.send(result)
+
+      
+     })
+
+         
 
     }
     finally {

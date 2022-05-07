@@ -20,7 +20,8 @@ async function run() {
     try {
         await client.connect();
         const productCollection = client.db('laptop').collection('products')
-        
+        const userEmailCollection = client.db("User").collection("email");
+        //get
         app.get('/product', async (req, res) => {
             const query = {};
             const cursor = productCollection.find(query)
@@ -28,6 +29,7 @@ async function run() {
             res.send(products)
         
         });
+        //get
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
@@ -47,12 +49,23 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             const result = await productCollection.deleteOne(query)
-            res.send(result);
-        } )
+            res.send(result); 
+        })
+        
+     // user email add Post  
     
-
-
-
+         app.post('/user', async (req, res) => {
+            const userEmail = req.body
+            const result = await userEmailCollection.insertOne(userEmail)
+            res.send(result)
+         });
+         app.get('/user', async (req, res) => {
+            const query = {};
+            const cursor = userEmailCollection.find(query)
+            const products = await cursor.toArray()
+            res.send(products)
+        
+        });
 
     }
     finally {
@@ -61,7 +74,6 @@ async function run() {
     
 }
 run().catch(console.dir)
-
 
 
 app.get('/', (req, res) => {

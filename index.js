@@ -40,7 +40,20 @@ async function run() {
             const newProduct = req.body
             const result = await productCollection.insertOne(newProduct)
             res.send(result)
-        })
+        });
+      
+        //Delete
+        app.delete('/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await productCollection.deleteOne(query)
+            res.send(result);
+        } )
+    
+
+
+
+
     }
     finally {
         
@@ -56,6 +69,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('server site running assignment-11', port
-    );
+    console.log('server site running assignment-11', port );
 })

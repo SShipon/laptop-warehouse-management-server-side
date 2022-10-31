@@ -105,7 +105,7 @@ async function run() {
     })
 
 
-    // Update quantity api
+    // Update quantity api code
     app.put('/quantity/:id', async (req, res) =>{
       const id = req.params.id;
       const data = req.body;

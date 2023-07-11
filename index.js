@@ -31,7 +31,8 @@ app.use(express.json());
 
    // test url link 
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jgbqt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jgbqt.mongodb.net/?retryWrites=true&w=majority`
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 //  try finally function
@@ -58,7 +59,7 @@ async function run() {
 
     app.get('/product/:id',async(req, res)=>{
         const id = req.params.id;
-        const query={_id: ObjectId(id)};
+        const query={_id: new ObjectId(id)};
         const item = await productCollection.findOne(query);
         res.send(item);
     })
@@ -91,7 +92,7 @@ async function run() {
     //Delete Api
     app.delete('/product/:id', async(req, res)=>{
       const id = req.params.id;
-      const query = {_id: ObjectId(id)};
+      const query = {_id: new ObjectId(id)};
       const result = await productCollection.deleteOne(query);
       res.send(result);
     })
@@ -99,7 +100,7 @@ async function run() {
     //Delete product items api
     app.delete('/myItems/:id', async(req, res)=>{
       const id = req.params.id;
-      const query = {_id: ObjectId(id)};
+      const query = {_id: new ObjectId(id)};
       const result = await productCollection.deleteOne(query);
       res.send(result);
     })
@@ -109,7 +110,7 @@ async function run() {
     app.put('/quantity/:id', async (req, res) =>{
       const id = req.params.id;
       const data = req.body;
-      const filter = {_id: ObjectId(id)}
+      const filter = {_id: new ObjectId(id)}
       const options = { upsert: true};
       const updateDoc = {
         $set: {
@@ -129,7 +130,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Running server site shipon form bangladesh");
+  res.send("<h1 style='color:red; margin:20% auto; text-align:center'>Running server site shipon form bangladesh</h1>");
 });
 
 app.listen(port, () => {

@@ -125,14 +125,14 @@ async function run() {
 
   }
 }
-
+ /*  prot running */
 
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("<h1 style='color:red; margin:20% auto; text-align:center'>Running server site shipon form bangladesh</h1>");
+  res.send("<h1 style='color:red; margin:20% auto; text-align:center'>My Laptop WareHouse Management Server Running</h1>");
 });
 
 app.listen(port, () => {
-  console.log("server site running assignment-11", port);
+  console.log("server site running Laptop warehouse", port);
 });
